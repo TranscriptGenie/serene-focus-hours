@@ -87,6 +87,31 @@
       </div>
     </div>
 
+    <!-- Settings -->
+    <div class="settings-card">
+      <div class="settings-header">
+        <div class="settings-title">
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"></path>
+          </svg>
+          <h3>Daily Goal</h3>
+        </div>
+        <button id="editGoalBtn" class="btn-edit">Edit</button>
+      </div>
+      
+      <div class="goal-editor hidden" id="goalEditor">
+        <div class="goal-input-group">
+          <input type="number" id="goalInput" min="0.5" max="24" step="0.5" class="goal-input">
+          <span class="goal-unit">hours</span>
+        </div>
+        <div class="goal-actions">
+          <button id="saveGoalBtn" class="btn-save">Save</button>
+          <button id="cancelGoalBtn" class="btn-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Quote -->
     <div class="quote-section">
       <blockquote>"The quieter you become, the more able you are to hear."</blockquote>

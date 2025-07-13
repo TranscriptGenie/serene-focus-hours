@@ -264,6 +264,122 @@ body {
   font-weight: 500;
 }
 
+/* Settings Card */
+.settings-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.settings-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-title h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: hsl(142, 30%, 35%);
+}
+
+.btn-edit {
+  background: transparent;
+  color: hsl(142, 35%, 45%);
+  border: 1px solid hsl(142, 35%, 45%);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-edit:hover {
+  background: hsl(142, 35%, 45%, 0.1);
+}
+
+.goal-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.goal-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.goal-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid hsl(142, 25%, 55%, 0.3);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: hsl(142, 30%, 35%);
+  background: white;
+  transition: border-color 0.3s ease;
+}
+
+.goal-input:focus {
+  outline: none;
+  border-color: hsl(142, 35%, 45%);
+}
+
+.goal-unit {
+  font-size: 14px;
+  color: hsl(25, 8%, 45%);
+}
+
+.goal-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-save {
+  background: hsl(142, 35%, 45%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+  background: hsl(142, 30%, 35%);
+}
+
+.btn-cancel {
+  background: transparent;
+  color: hsl(25, 8%, 45%);
+  border: 1px solid hsl(25, 8%, 45%, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background: hsl(25, 8%, 45%, 0.1);
+}
+
 /* Quote */
 .quote-section {
   text-align: center;

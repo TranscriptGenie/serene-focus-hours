@@ -29,6 +29,13 @@ class FocusStopwatch {
     this.sessionCount = document.getElementById('sessionCount');
     this.sessionsList = document.getElementById('sessionsList');
     this.sessionsSection = document.getElementById('sessionsSection');
+    
+    // Settings elements
+    this.editGoalBtn = document.getElementById('editGoalBtn');
+    this.goalEditor = document.getElementById('goalEditor');
+    this.goalInput = document.getElementById('goalInput');
+    this.saveGoalBtn = document.getElementById('saveGoalBtn');
+    this.cancelGoalBtn = document.getElementById('cancelGoalBtn');
   }
 
   loadSavedData() {
@@ -83,6 +90,47 @@ class FocusStopwatch {
     this.startBtn.addEventListener('click', () => this.handleStart());
     this.pauseBtn.addEventListener('click', () => this.handlePause());
     this.stopBtn.addEventListener('click', () => this.handleStop());
+    
+    // Settings events
+    this.editGoalBtn.addEventListener('click', () => this.showGoalEditor());
+    this.saveGoalBtn.addEventListener('click', () => this.saveGoal());
+    this.cancelGoalBtn.addEventListener('click', () => this.hideGoalEditor());
+    
+    // Handle Enter key in goal input
+    this.goalInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        this.saveGoal();
+      }
+    });
+  }
+
+  showGoalEditor() {
+    this.goalInput.value = this.dailyGoal;
+    this.goalEditor.classList.remove('hidden');
+    this.editGoalBtn.classList.add('hidden');
+    this.goalInput.focus();
+  }
+
+  hideGoalEditor() {
+    this.goalEditor.classList.add('hidden');
+    this.editGoalBtn.classList.remove('hidden');
+  }
+
+  saveGoal() {
+    const newGoal = parseFloat(this.goalInput.value);
+    
+    if (isNaN(newGoal) || newGoal < 0.5 || newGoal > 24) {
+      this.showToast("Invalid goal", "Please enter a goal between 0.5 and 24 hours");
+      return;
+    }
+
+    const oldGoal = this.dailyGoal;
+    this.dailyGoal = newGoal;
+    this.saveData();
+    this.hideGoalEditor();
+    this.updateDisplay();
+
+    this.showToast("Goal updated", `Daily goal changed from ${oldGoal}h to ${newGoal}h`);
   }
 
   formatTime(totalSeconds) {

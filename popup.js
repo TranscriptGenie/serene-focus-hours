@@ -29,6 +29,12 @@ class FocusStopwatch {
     this.sessionCount = document.getElementById('sessionCount');
     this.sessionsList = document.getElementById('sessionsList');
     this.sessionsSection = document.getElementById('sessionsSection');
+    
+    // Settings elements
+    this.settingsToggle = document.getElementById('settingsToggle');
+    this.settingsPanel = document.getElementById('settingsPanel');
+    this.goalInput = document.getElementById('goalInput');
+    this.saveGoalBtn = document.getElementById('saveGoal');
   }
 
   loadSavedData() {
@@ -48,6 +54,7 @@ class FocusStopwatch {
         }
       }
       this.updateDisplay();
+      this.updateGoalInput();
     });
 
     // Check if timer was running when popup was closed
@@ -83,6 +90,38 @@ class FocusStopwatch {
     this.startBtn.addEventListener('click', () => this.handleStart());
     this.pauseBtn.addEventListener('click', () => this.handlePause());
     this.stopBtn.addEventListener('click', () => this.handleStop());
+    
+    // Settings events
+    this.settingsToggle.addEventListener('click', () => this.toggleSettings());
+    this.saveGoalBtn.addEventListener('click', () => this.saveGoal());
+    this.goalInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        this.saveGoal();
+      }
+    });
+  }
+
+  toggleSettings() {
+    this.settingsPanel.classList.toggle('hidden');
+  }
+
+  saveGoal() {
+    const newGoal = parseFloat(this.goalInput.value);
+    if (newGoal && newGoal >= 0.5 && newGoal <= 24) {
+      this.dailyGoal = newGoal;
+      this.saveData();
+      this.updateDisplay();
+      this.showToast("Goal updated!", `Daily goal set to ${newGoal} hours`);
+      this.settingsPanel.classList.add('hidden');
+    } else {
+      this.showToast("Invalid goal", "Please enter a value between 0.5 and 24 hours");
+    }
+  }
+
+  updateGoalInput() {
+    if (this.goalInput) {
+      this.goalInput.value = this.dailyGoal;
+    }
   }
 
   formatTime(totalSeconds) {

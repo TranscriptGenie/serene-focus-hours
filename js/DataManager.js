@@ -6,6 +6,7 @@ export class DataManager {
     this.dailyGoal = 4; // 4 hours default
     this.dailyProgress = 0;
     this.todaysSessions = [];
+    this.currentTimerState = null;
   }
 
   async loadSavedData() {
@@ -33,9 +34,14 @@ export class DataManager {
   async loadTimerState() {
     return new Promise((resolve) => {
       chrome.storage.local.get(['timerState'], (result) => {
-        resolve(result.timerState || null);
+        this.currentTimerState = result.timerState || null;
+        resolve(this.currentTimerState);
       });
     });
+  }
+
+  getTimerState() {
+    return this.currentTimerState;
   }
 
   saveData() {
@@ -54,10 +60,12 @@ export class DataManager {
       startTime,
       seconds
     };
+    this.currentTimerState = timerState;
     chrome.storage.local.set({ timerState });
   }
 
   clearTimerState() {
+    this.currentTimerState = null;
     chrome.storage.local.remove('timerState');
   }
 

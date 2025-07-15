@@ -4,6 +4,9 @@
 import { DataManager } from './DataManager.js';
 import { UIController } from './UIController.js';
 import { SettingsManager } from './SettingsManager.js';
+import { HistoryManager } from './HistoryManager.js';
+import { HistoryUI } from './HistoryUI.js';
+import { AutoSaveManager } from './AutoSaveManager.js';
 import { showToast } from './utils.js';
 
 export class FocusStopwatch {
@@ -14,6 +17,7 @@ export class FocusStopwatch {
     this.startTime = null;
 
     this.dataManager = new DataManager();
+    this.historyManager = new HistoryManager();
     this.uiController = new UIController();
     
     this.init();
@@ -21,7 +25,12 @@ export class FocusStopwatch {
 
   async init() {
     await this.dataManager.loadSavedData();
+    await this.historyManager.loadHistory();
+    
     this.settingsManager = new SettingsManager(this.dataManager, () => this.updateDisplay());
+    this.historyUI = new HistoryUI(this.historyManager);
+    this.autoSaveManager = new AutoSaveManager(this.dataManager, this.historyManager);
+    
     this.settingsManager.updateGoalInput();
     
     await this.restoreTimerState();
@@ -73,6 +82,16 @@ export class FocusStopwatch {
     if (this.seconds > 0) {
       const sessionMinutes = Math.round(this.seconds / 60);
       this.dataManager.addSession(this.seconds);
+      
+      // Save to history
+      const today = new Date().toDateString();
+      this.historyManager.addDailyRecord(
+        today,
+        this.dataManager.dailyProgress,
+        this.dataManager.todaysSessions,
+        this.dataManager.dailyGoal
+      );
+      
       showToast("Focus session completed!", `${sessionMinutes} minutes of deep work recorded`);
     }
     
